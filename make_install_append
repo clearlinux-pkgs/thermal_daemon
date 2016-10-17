@@ -1,0 +1,5 @@
+mkdir -p %{buildroot}/usr/share/dbus-1/system.d
+install -p -D -m 644 data/org.freedesktop.thermald.conf %{buildroot}/usr/share/dbus-1/system.d/org.freedesktop.thermald.conf
+
+mkdir -p %{buildroot}/usr/lib/systemd/system/multi-user.target.wants
+ln -sf ../thermald.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wants/thermald.service
