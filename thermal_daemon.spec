@@ -4,7 +4,7 @@
 #
 Name     : thermal_daemon
 Version  : 1.7.1
-Release  : 14
+Release  : 15
 URL      : https://github.com/intel/thermal_daemon/archive/v1.7.1.tar.gz
 Source0  : https://github.com/intel/thermal_daemon/archive/v1.7.1.tar.gz
 Summary  : The "Linux Thermal Daemon" program from 01.org
@@ -80,9 +80,9 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1511116053
+export SOURCE_DATE_EPOCH=1512433989
 %autogen --disable-static
-make  %{?_smp_mflags}
+make V=1  %{?_smp_mflags}
 
 %check
 export LANG=C
@@ -92,7 +92,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1511116053
+export SOURCE_DATE_EPOCH=1512433989
 rm -rf %{buildroot}
 %make_install
 ## make_install_append content
