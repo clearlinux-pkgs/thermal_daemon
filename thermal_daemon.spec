@@ -4,7 +4,7 @@
 #
 Name     : thermal_daemon
 Version  : 1.7.1
-Release  : 16
+Release  : 17
 URL      : https://github.com/intel/thermal_daemon/archive/v1.7.1.tar.gz
 Source0  : https://github.com/intel/thermal_daemon/archive/v1.7.1.tar.gz
 Summary  : The "Linux Thermal Daemon" program from 01.org
