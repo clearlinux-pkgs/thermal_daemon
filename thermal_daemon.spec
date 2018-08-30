@@ -4,7 +4,7 @@
 #
 Name     : thermal_daemon
 Version  : 1.7.2
-Release  : 19
+Release  : 20
 URL      : https://github.com/intel/thermal_daemon/archive/v1.7.2.tar.gz
 Source0  : https://github.com/intel/thermal_daemon/archive/v1.7.2.tar.gz
 Summary  : The "Linux Thermal Daemon" program from 01.org
@@ -14,7 +14,9 @@ Requires: thermal_daemon-bin
 Requires: thermal_daemon-autostart
 Requires: thermal_daemon-config
 Requires: thermal_daemon-data
+Requires: thermal_daemon-license
 Requires: thermal_daemon-man
+BuildRequires : buildreq-qmake
 BuildRequires : gettext
 BuildRequires : perl(XML::Parser)
 BuildRequires : pkgconfig(dbus-1)
@@ -22,8 +24,8 @@ BuildRequires : pkgconfig(dbus-glib-1)
 BuildRequires : pkgconfig(gio-unix-2.0)
 BuildRequires : pkgconfig(gmodule-2.0)
 BuildRequires : pkgconfig(libxml-2.0)
-BuildRequires : qtbase-dev
-BuildRequires : qtbase-extras
+BuildRequires : pkgconfig(systemd)
+BuildRequires : systemd-dev
 Patch1: 0001-start-the-service-if-battery-exists.patch
 
 %description
@@ -42,6 +44,7 @@ Summary: bin components for the thermal_daemon package.
 Group: Binaries
 Requires: thermal_daemon-data
 Requires: thermal_daemon-config
+Requires: thermal_daemon-license
 Requires: thermal_daemon-man
 
 %description bin
@@ -64,6 +67,14 @@ Group: Data
 data components for the thermal_daemon package.
 
 
+%package license
+Summary: license components for the thermal_daemon package.
+Group: Default
+
+%description license
+license components for the thermal_daemon package.
+
+
 %package man
 Summary: man components for the thermal_daemon package.
 Group: Default
@@ -81,7 +92,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1528186940
+export SOURCE_DATE_EPOCH=1535644303
 %autogen --disable-static
 make  %{?_smp_mflags}
 
@@ -93,15 +104,18 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1528186940
+export SOURCE_DATE_EPOCH=1535644303
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/doc/thermal_daemon
+cp COPYING %{buildroot}/usr/share/doc/thermal_daemon/COPYING
+cp tools/thermal_monitor/qcustomplot/GPL.txt %{buildroot}/usr/share/doc/thermal_daemon/tools_thermal_monitor_qcustomplot_GPL.txt
 %make_install
-## make_install_append content
+## install_append content
 mkdir -p %{buildroot}/usr/share/dbus-1/system.d
 install -p -D -m 644 data/org.freedesktop.thermald.conf %{buildroot}/usr/share/dbus-1/system.d/org.freedesktop.thermald.conf
 mkdir -p %{buildroot}/usr/lib/systemd/system/multi-user.target.wants
 ln -sf ../thermald.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wants/thermald.service
-## make_install_append end
+## install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -123,6 +137,11 @@ ln -sf ../thermald.service %{buildroot}/usr/lib/systemd/system/multi-user.target
 %defattr(-,root,root,-)
 /usr/share/dbus-1/system-services/org.freedesktop.thermald.service
 /usr/share/dbus-1/system.d/org.freedesktop.thermald.conf
+
+%files license
+%defattr(-,root,root,-)
+/usr/share/doc/thermal_daemon/COPYING
+/usr/share/doc/thermal_daemon/tools_thermal_monitor_qcustomplot_GPL.txt
 
 %files man
 %defattr(-,root,root,-)
