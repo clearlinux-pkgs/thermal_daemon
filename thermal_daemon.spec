@@ -4,7 +4,7 @@
 #
 Name     : thermal_daemon
 Version  : 1.8
-Release  : 21
+Release  : 22
 URL      : https://github.com/intel/thermal_daemon/archive/v1.8.tar.gz
 Source0  : https://github.com/intel/thermal_daemon/archive/v1.8.tar.gz
 Summary  : The "Linux Thermal Daemon" program from 01.org
@@ -27,6 +27,7 @@ BuildRequires : pkgconfig(libxml-2.0)
 BuildRequires : pkgconfig(systemd)
 BuildRequires : systemd-dev
 Patch1: 0001-start-the-service-if-battery-exists.patch
+Patch2: 0002-fix-cdev-state-error-while-trip-point-is-off.patch
 
 %description
 Thermal Daemon monitors and controls platform temperature.
@@ -86,13 +87,14 @@ man components for the thermal_daemon package.
 %prep
 %setup -q -n thermal_daemon-1.8
 %patch1 -p1
+%patch2 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1536793463
+export SOURCE_DATE_EPOCH=1537236072
 %autogen --disable-static
 make  %{?_smp_mflags}
 
@@ -104,7 +106,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1536793463
+export SOURCE_DATE_EPOCH=1537236072
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/thermal_daemon
 cp COPYING %{buildroot}/usr/share/doc/thermal_daemon/COPYING
