@@ -1,0 +1,22 @@
+From 46660ed5dd644a2e49050a7f94fd4c412206aeda Mon Sep 17 00:00:00 2001
+From: Josue David Hernandez <josue.d.hernandez.gutierrez@intel.com>
+Date: Tue, 2 Oct 2018 15:43:28 -0500
+Subject: [PATCH] Add add udev rule to start thermald just when the battery is
+ present
+
+Signed-off-by: Josue David Hernandez <josue.d.hernandez.gutierrez@intel.com>
+---
+ 90-thermald-on-battery.rules | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 90-thermald-on-battery.rules
+
+diff --git a/90-thermald-on-battery.rules b/90-thermald-on-battery.rules
+new file mode 100644
+index 0000000..b4b247b
+--- /dev/null
++++ b/90-thermald-on-battery.rules
+@@ -0,0 +1 @@
++KERNEL=="BAT*" SUBSYSTEM=="power_supply" RUN="/usr/bin/systemctl start thermald.service"
+-- 
+2.19.0
+

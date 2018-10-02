@@ -1,2 +1,3 @@
 0001-start-the-service-if-battery-exists.patch
 0002-fix-cdev-state-error-while-trip-point-is-off.patch
+0001-Add-add-udev-rule-to-start-thermald-just-when-the-ba.patch
