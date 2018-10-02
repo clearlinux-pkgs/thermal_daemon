@@ -4,18 +4,17 @@
 #
 Name     : thermal_daemon
 Version  : 1.8
-Release  : 22
+Release  : 23
 URL      : https://github.com/intel/thermal_daemon/archive/v1.8.tar.gz
 Source0  : https://github.com/intel/thermal_daemon/archive/v1.8.tar.gz
 Summary  : The "Linux Thermal Daemon" program from 01.org
 Group    : Development/Tools
 License  : GPL-2.0 GPL-2.0+ GPL-3.0
-Requires: thermal_daemon-bin
-Requires: thermal_daemon-autostart
-Requires: thermal_daemon-config
-Requires: thermal_daemon-data
-Requires: thermal_daemon-license
-Requires: thermal_daemon-man
+Requires: thermal_daemon-bin = %{version}-%{release}
+Requires: thermal_daemon-config = %{version}-%{release}
+Requires: thermal_daemon-data = %{version}-%{release}
+Requires: thermal_daemon-license = %{version}-%{release}
+Requires: thermal_daemon-man = %{version}-%{release}
 BuildRequires : buildreq-qmake
 BuildRequires : gettext
 BuildRequires : perl(XML::Parser)
@@ -28,25 +27,18 @@ BuildRequires : pkgconfig(systemd)
 BuildRequires : systemd-dev
 Patch1: 0001-start-the-service-if-battery-exists.patch
 Patch2: 0002-fix-cdev-state-error-while-trip-point-is-off.patch
+Patch3: 0001-Add-add-udev-rule-to-start-thermald-just-when-the-ba.patch
 
 %description
 Thermal Daemon monitors and controls platform temperature.
 
-%package autostart
-Summary: autostart components for the thermal_daemon package.
-Group: Default
-
-%description autostart
-autostart components for the thermal_daemon package.
-
-
 %package bin
 Summary: bin components for the thermal_daemon package.
 Group: Binaries
-Requires: thermal_daemon-data
-Requires: thermal_daemon-config
-Requires: thermal_daemon-license
-Requires: thermal_daemon-man
+Requires: thermal_daemon-data = %{version}-%{release}
+Requires: thermal_daemon-config = %{version}-%{release}
+Requires: thermal_daemon-license = %{version}-%{release}
+Requires: thermal_daemon-man = %{version}-%{release}
 
 %description bin
 bin components for the thermal_daemon package.
@@ -88,13 +80,14 @@ man components for the thermal_daemon package.
 %setup -q -n thermal_daemon-1.8
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1537236072
+export SOURCE_DATE_EPOCH=1538517201
 %autogen --disable-static
 make  %{?_smp_mflags}
 
@@ -106,25 +99,21 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1537236072
+export SOURCE_DATE_EPOCH=1538517201
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/thermal_daemon
-cp COPYING %{buildroot}/usr/share/doc/thermal_daemon/COPYING
-cp tools/thermal_monitor/qcustomplot/GPL.txt %{buildroot}/usr/share/doc/thermal_daemon/tools_thermal_monitor_qcustomplot_GPL.txt
+mkdir -p %{buildroot}/usr/share/package-licenses/thermal_daemon
+cp COPYING %{buildroot}/usr/share/package-licenses/thermal_daemon/COPYING
+cp tools/thermal_monitor/qcustomplot/GPL.txt %{buildroot}/usr/share/package-licenses/thermal_daemon/tools_thermal_monitor_qcustomplot_GPL.txt
 %make_install
 ## install_append content
 mkdir -p %{buildroot}/usr/share/dbus-1/system.d
 install -p -D -m 644 data/org.freedesktop.thermald.conf %{buildroot}/usr/share/dbus-1/system.d/org.freedesktop.thermald.conf
-mkdir -p %{buildroot}/usr/lib/systemd/system/multi-user.target.wants
-ln -sf ../thermald.service %{buildroot}/usr/lib/systemd/system/multi-user.target.wants/thermald.service
+mkdir -p %{buildroot}/usr/lib/udev/rules.d/
+install -p -D -m 644 90-thermald-on-battery.rules %{buildroot}/usr/lib/udev/rules.d/90-thermald-on-battery.rules
 ## install_append end
 
 %files
 %defattr(-,root,root,-)
-
-%files autostart
-%defattr(-,root,root,-)
-/usr/lib/systemd/system/multi-user.target.wants/thermald.service
 
 %files bin
 %defattr(-,root,root,-)
@@ -132,8 +121,8 @@ ln -sf ../thermald.service %{buildroot}/usr/lib/systemd/system/multi-user.target
 
 %files config
 %defattr(-,root,root,-)
-%exclude /usr/lib/systemd/system/multi-user.target.wants/thermald.service
 /usr/lib/systemd/system/thermald.service
+/usr/lib/udev/rules.d/90-thermald-on-battery.rules
 
 %files data
 %defattr(-,root,root,-)
@@ -142,8 +131,8 @@ ln -sf ../thermald.service %{buildroot}/usr/lib/systemd/system/multi-user.target
 
 %files license
 %defattr(-,root,root,-)
-/usr/share/doc/thermal_daemon/COPYING
-/usr/share/doc/thermal_daemon/tools_thermal_monitor_qcustomplot_GPL.txt
+/usr/share/package-licenses/thermal_daemon/COPYING
+/usr/share/package-licenses/thermal_daemon/tools_thermal_monitor_qcustomplot_GPL.txt
 
 %files man
 %defattr(-,root,root,-)
