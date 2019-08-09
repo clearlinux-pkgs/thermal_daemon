@@ -1,0 +1,255 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Miguel Bernal Marin <miguel.bernal.marin@linux.intel.com>
+Date: Thu, 8 Aug 2019 20:13:27 -0500
+Subject: [PATCH] Add thermal conf example for KBL NUC
+
+It is taken from:
+
+https://raw.githubusercontent.com/projectceladon/device-androidia/e150c26aae40eda8d00195f06bc16e4cfea3a6ee/common/thermal/thermal-conf.xml
+
+and is used on KBL NUC in ACNR project.
+
+Copy this file /etc/thermald/thermal-config.xml
+---
+ thermal-conf.KBL_NUC.xml | 229 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 229 insertions(+)
+ create mode 100644 thermal-conf.KBL_NUC.xml
+
+diff --git a/thermal-conf.KBL_NUC.xml b/thermal-conf.KBL_NUC.xml
+new file mode 100644
+index 0000000..29ac9d0
+--- /dev/null
++++ b/thermal-conf.KBL_NUC.xml
+@@ -0,0 +1,229 @@
++<?xml version="1.0"?>
++<!-- BEGIN -->
++<ThermalConfiguration>
++	<Platform>
++		<Name> KBL-NUC </Name>
++		<ProductName>NUC7i5BNH</ProductName>
++		<Preference>QUIET</Preference>
++		<ThermalZones>
++			<ThermalZone>
++				<Type>cpu_passive</Type>
++				<TripPoints>
++					<TripPoint>
++						<SensorType>x86_pkg_temp</SensorType>
++						<Temperature>85000</Temperature>
++						<Type>Passive</Type>
++						<CoolingDevice>
++							<Type>rapl_limit_1</Type>
++						</CoolingDevice>
++					</TripPoint>
++					<TripPoint>
++						<SensorType>x86_pkg_temp</SensorType>
++						<Temperature>95000</Temperature>
++						<Type>Passive</Type>
++						<CoolingDevice>
++							<Type>rapl_limit_2</Type>
++						</CoolingDevice>
++					</TripPoint>
++				</TripPoints>
++			</ThermalZone>
++			<ThermalZone>
++				<Type>cpu_critical</Type>
++				<TripPoints>
++					<TripPoint>
++						<SensorType>x86_pkg_temp</SensorType>
++						<Temperature>99000</Temperature>
++						<Type>Critical</Type>
++					</TripPoint>
++				</TripPoints>
++			</ThermalZone>
++		</ThermalZones>
++		<CoolingDevices>
++			<CoolingDevice>
++				<Type>rapl_limit_1</Type>
++				<Path>/sys/devices/virtual/powercap/intel-rapl/intel-rapl:0/constraint_0_power_limit_uw</Path>
++				<MinState>25000000</MinState>
++				<ReadBack>0</ReadBack>
++				<MaxState>13000000</MaxState>
++				<IncDecStep>-200000</IncDecStep>
++			</CoolingDevice>
++			<CoolingDevice>
++				<Type>rapl_limit_2</Type>
++				<Path>/sys/devices/virtual/powercap/intel-rapl/intel-rapl:0/constraint_0_power_limit_uw</Path>
++				<MinState>13000000</MinState>
++				<ReadBack>0</ReadBack>
++				<MaxState>6000000</MaxState>
++				<IncDecStep>-200000</IncDecStep>
++			</CoolingDevice>
++		</CoolingDevices>
++	</Platform>
++	<Platform>
++		<Name> KBL-NUC-D </Name>
++		<ProductName>NUC7i5DNHE</ProductName>
++		<Preference>QUIET</Preference>
++		<ThermalZones>
++			<ThermalZone>
++				<Type>cpu_passive</Type>
++				<TripPoints>
++					<TripPoint>
++						<SensorType>x86_pkg_temp</SensorType>
++						<Temperature>85000</Temperature>
++						<Type>Passive</Type>
++						<CoolingDevice>
++							<Type>rapl_limit_1</Type>
++						</CoolingDevice>
++					</TripPoint>
++					<TripPoint>
++						<SensorType>x86_pkg_temp</SensorType>
++						<Temperature>95000</Temperature>
++						<Type>Passive</Type>
++						<CoolingDevice>
++							<Type>rapl_limit_2</Type>
++						</CoolingDevice>
++					</TripPoint>
++				</TripPoints>
++			</ThermalZone>
++			<ThermalZone>
++				<Type>cpu_critical</Type>
++				<TripPoints>
++					<TripPoint>
++						<SensorType>x86_pkg_temp</SensorType>
++						<Temperature>99000</Temperature>
++						<Type>Critical</Type>
++					</TripPoint>
++				</TripPoints>
++			</ThermalZone>
++		</ThermalZones>
++		<CoolingDevices>
++			<CoolingDevice>
++				<Type>rapl_limit_1</Type>
++				<Path>/sys/devices/virtual/powercap/intel-rapl/intel-rapl:0/constraint_0_power_limit_uw</Path>
++				<MinState>20000000</MinState>
++				<ReadBack>0</ReadBack>
++				<MaxState>14000000</MaxState>
++				<IncDecStep>-200000</IncDecStep>
++			</CoolingDevice>
++			<CoolingDevice>
++				<Type>rapl_limit_2</Type>
++				<Path>/sys/devices/virtual/powercap/intel-rapl/intel-rapl:0/constraint_0_power_limit_uw</Path>
++				<MinState>14000000</MinState>
++				<ReadBack>0</ReadBack>
++				<MaxState>6000000</MaxState>
++				<IncDecStep>-200000</IncDecStep>
++			</CoolingDevice>
++		</CoolingDevices>
++	</Platform>
++	<Platform>
++		<Name> APL-NUC </Name>
++		<ProductName>NUC6CAYH</ProductName>
++		<Preference>QUIET</Preference>
++		<ThermalZones>
++			<ThermalZone>
++				<Type>cpu_passive</Type>
++				<TripPoints>
++					<TripPoint>
++						<SensorType>x86_pkg_temp</SensorType>
++						<Temperature>90000</Temperature>
++						<Type>Passive</Type>
++						<CoolingDevice>
++							<Type>rapl_limit_1</Type>
++						</CoolingDevice>
++					</TripPoint>
++					<TripPoint>
++						<SensorType>x86_pkg_temp</SensorType>
++						<Temperature>100000</Temperature>
++						<Type>Passive</Type>
++						<CoolingDevice>
++							<Type>rapl_limit_2</Type>
++						</CoolingDevice>
++					</TripPoint>
++				</TripPoints>
++			</ThermalZone>
++			<ThermalZone>
++				<Type>cpu_critical</Type>
++				<TripPoints>
++					<TripPoint>
++						<SensorType>x86_pkg_temp</SensorType>
++						<Temperature>104000</Temperature>
++						<Type>Critical</Type>
++					</TripPoint>
++				</TripPoints>
++			</ThermalZone>
++		</ThermalZones>
++		<CoolingDevices>
++			<CoolingDevice>
++				<Type>rapl_limit_1</Type>
++				<Path>/sys/devices/virtual/powercap/intel-rapl/intel-rapl:0/constraint_0_power_limit_uw</Path>
++				<MinState>12000000</MinState>
++				<ReadBack>0</ReadBack>
++				<MaxState>8000000</MaxState>
++				<IncDecStep>-200000</IncDecStep>
++			</CoolingDevice>
++			<CoolingDevice>
++				<Type>rapl_limit_2</Type>
++				<Path>/sys/devices/virtual/powercap/intel-rapl/intel-rapl:0/constraint_0_power_limit_uw</Path>
++				<MinState>8000000</MinState>
++				<ReadBack>0</ReadBack>
++				<MaxState>6000000</MaxState>
++				<IncDecStep>-200000</IncDecStep>
++			</CoolingDevice>
++		</CoolingDevices>
++	</Platform>
++	<Platform>
++		<Name> WHL </Name>
++		<ProductName>WhiskeyLakeClientPlatform</ProductName>
++		<Preference>QUIET</Preference>
++		<ThermalZones>
++			<ThermalZone>
++				<Type>cpu_passive</Type>
++				<TripPoints>
++					<TripPoint>
++						<SensorType>x86_pkg_temp</SensorType>
++						<Temperature>82000</Temperature>
++						<Type>Passive</Type>
++						<CoolingDevice>
++							<Type>rapl_limit_1</Type>
++						</CoolingDevice>
++					</TripPoint>
++					<TripPoint>
++						<SensorType>x86_pkg_temp</SensorType>
++						<Temperature>92000</Temperature>
++						<Type>Passive</Type>
++						<CoolingDevice>
++							<Type>rapl_limit_2</Type>
++						</CoolingDevice>
++					</TripPoint>
++				</TripPoints>
++			</ThermalZone>
++			<ThermalZone>
++				<Type>cpu_critical</Type>
++				<TripPoints>
++					<TripPoint>
++						<SensorType>x86_pkg_temp</SensorType>
++						<Temperature>99000</Temperature>
++						<Type>Critical</Type>
++					</TripPoint>
++				</TripPoints>
++			</ThermalZone>
++		</ThermalZones>
++		<CoolingDevices>
++			<CoolingDevice>
++				<Type>rapl_limit_1</Type>
++				<Path>/sys/devices/virtual/powercap/intel-rapl/intel-rapl:0/constraint_0_power_limit_uw</Path>
++				<MinState>15000000</MinState>
++				<ReadBack>0</ReadBack>
++				<MaxState>8000000</MaxState>
++				<IncDecStep>-400000</IncDecStep>
++			</CoolingDevice>
++			<CoolingDevice>
++				<Type>rapl_limit_2</Type>
++				<Path>/sys/devices/virtual/powercap/intel-rapl/intel-rapl:0/constraint_0_power_limit_uw</Path>
++				<MinState>8000000</MinState>
++				<ReadBack>0</ReadBack>
++				<MaxState>4000000</MaxState>
++				<IncDecStep>-600000</IncDecStep>
++			</CoolingDevice>
++		</CoolingDevices>
++	</Platform>
++</ThermalConfiguration>
++<!-- END -->
+-- 
+https://clearlinux.org
+
