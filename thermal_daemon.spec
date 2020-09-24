@@ -4,7 +4,7 @@
 #
 Name     : thermal_daemon
 Version  : 2.3
-Release  : 31
+Release  : 32
 URL      : https://github.com/intel/thermal_daemon/archive/v2.3/thermal_daemon-2.3.tar.gz
 Source0  : https://github.com/intel/thermal_daemon/archive/v2.3/thermal_daemon-2.3.tar.gz
 Summary  : The "Linux Thermal Daemon" program from 01.org
