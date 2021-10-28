@@ -4,12 +4,13 @@
 #
 Name     : thermal_daemon
 Version  : 2.4.6
-Release  : 39
+Release  : 40
 URL      : https://github.com/intel/thermal_daemon/archive/v2.4.6/thermal_daemon-2.4.6.tar.gz
 Source0  : https://github.com/intel/thermal_daemon/archive/v2.4.6/thermal_daemon-2.4.6.tar.gz
 Summary  : The "Linux Thermal Daemon" program from 01.org
 Group    : Development/Tools
 License  : GPL-2.0 GPL-2.0+ GPL-3.0
+Requires: thermal_daemon-autostart = %{version}-%{release}
 Requires: thermal_daemon-bin = %{version}-%{release}
 Requires: thermal_daemon-config = %{version}-%{release}
 Requires: thermal_daemon-data = %{version}-%{release}
@@ -111,15 +112,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1623165362
+export SOURCE_DATE_EPOCH=1635433267
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto "
 %autogen --disable-static
 make  %{?_smp_mflags}
 
@@ -131,7 +132,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1623165362
+export SOURCE_DATE_EPOCH=1635433267
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/thermal_daemon
 cp %{_builddir}/thermal_daemon-2.4.6/COPYING %{buildroot}/usr/share/package-licenses/thermal_daemon/b3aebbdebf056cbf1cb73b76edf8ea105c37239d
