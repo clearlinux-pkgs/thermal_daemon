@@ -4,7 +4,7 @@
 #
 Name     : thermal_daemon
 Version  : 2.5.1
-Release  : 44
+Release  : 45
 URL      : https://github.com/intel/thermal_daemon/archive/v2.5.1/thermal_daemon-2.5.1.tar.gz
 Source0  : https://github.com/intel/thermal_daemon/archive/v2.5.1/thermal_daemon-2.5.1.tar.gz
 Summary  : The "Linux Thermal Daemon" program from 01.org
@@ -112,7 +112,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1663690838
+export SOURCE_DATE_EPOCH=1673627096
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -132,11 +132,11 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1663690838
+export SOURCE_DATE_EPOCH=1673627096
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/thermal_daemon
-cp %{_builddir}/thermal_daemon-%{version}/COPYING %{buildroot}/usr/share/package-licenses/thermal_daemon/b3aebbdebf056cbf1cb73b76edf8ea105c37239d || :
-cp %{_builddir}/thermal_daemon-%{version}/tools/thermal_monitor/COPYING %{buildroot}/usr/share/package-licenses/thermal_daemon/31a3d460bb3c7d98845187c716a30db81c44b615 || :
+cp %{_builddir}/thermal_daemon-%{version}/COPYING %{buildroot}/usr/share/package-licenses/thermal_daemon/b3aebbdebf056cbf1cb73b76edf8ea105c37239d
+cp %{_builddir}/thermal_daemon-%{version}/tools/thermal_monitor/COPYING %{buildroot}/usr/share/package-licenses/thermal_daemon/31a3d460bb3c7d98845187c716a30db81c44b615
 %make_install
 ## install_append content
 mkdir -p %{buildroot}/usr/share/dbus-1/system.d
