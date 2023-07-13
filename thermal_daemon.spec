@@ -5,7 +5,7 @@
 #
 Name     : thermal_daemon
 Version  : 2.5.3
-Release  : 47
+Release  : 48
 URL      : https://github.com/intel/thermal_daemon/archive/v2.5.3/thermal_daemon-2.5.3.tar.gz
 Source0  : https://github.com/intel/thermal_daemon/archive/v2.5.3/thermal_daemon-2.5.3.tar.gz
 Summary  : The "Linux Thermal Daemon" program from 01.org
@@ -33,6 +33,7 @@ BuildRequires : pkgconfig(gmodule-2.0)
 BuildRequires : pkgconfig(libevdev)
 BuildRequires : pkgconfig(liblzma)
 BuildRequires : pkgconfig(libxml-2.0)
+BuildRequires : pkgconfig(systemd)
 BuildRequires : pkgconfig(upower-glib)
 # Suppress stripping binaries
 %define __strip /bin/true
@@ -118,7 +119,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1688676084
+export SOURCE_DATE_EPOCH=1689267608
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -149,7 +150,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1688676084
+export SOURCE_DATE_EPOCH=1689267608
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/thermal_daemon
 cp %{_builddir}/thermal_daemon-%{version}/COPYING %{buildroot}/usr/share/package-licenses/thermal_daemon/b3aebbdebf056cbf1cb73b76edf8ea105c37239d || :
@@ -191,6 +192,7 @@ ln -s ../thermald.service %{buildroot}/usr/lib/systemd/system/multi-user.target.
 
 %files data
 %defattr(-,root,root,-)
+/usr/share/dbus-1/system-services/org.freedesktop.thermald.service
 /usr/share/dbus-1/system.d/org.freedesktop.thermald.conf
 /usr/share/thermald/thermal-conf.KBL_NUC.xml
 
@@ -207,3 +209,4 @@ ln -s ../thermald.service %{buildroot}/usr/lib/systemd/system/multi-user.target.
 %files services
 %defattr(-,root,root,-)
 %exclude /usr/lib/systemd/system/multi-user.target.wants/thermald.service
+/usr/lib/systemd/system/thermald.service
