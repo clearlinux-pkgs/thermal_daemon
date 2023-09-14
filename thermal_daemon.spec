@@ -5,7 +5,7 @@
 #
 Name     : thermal_daemon
 Version  : 2.5.4
-Release  : 50
+Release  : 52
 URL      : https://github.com/intel/thermal_daemon/archive/v2.5.4/thermal_daemon-2.5.4.tar.gz
 Source0  : https://github.com/intel/thermal_daemon/archive/v2.5.4/thermal_daemon-2.5.4.tar.gz
 Summary  : The "Linux Thermal Daemon" program from 01.org
@@ -119,7 +119,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1692000735
+export SOURCE_DATE_EPOCH=1694711855
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -128,7 +128,7 @@ export CFLAGS="$CFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -f
 export FCFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 export FFLAGS="$FFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 export CXXFLAGS="$CXXFLAGS -O3 -fdebug-types-section -femit-struct-debug-baseonly -ffat-lto-objects -flto=auto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
-%autogen --disable-static
+%autogen --disable-static --sysconfdir=/usr/share/defaults/
 make  %{?_smp_mflags}
 
 pushd ../buildavx2/
@@ -137,7 +137,7 @@ export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
 export FFLAGS="$FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
 export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3 "
 export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3 "
-%autogen --disable-static
+%autogen --disable-static --sysconfdir=/usr/share/defaults/
 make  %{?_smp_mflags}
 popd
 %check
@@ -150,7 +150,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1692000735
+export SOURCE_DATE_EPOCH=1694711855
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/thermal_daemon
 cp %{_builddir}/thermal_daemon-%{version}/COPYING %{buildroot}/usr/share/package-licenses/thermal_daemon/b3aebbdebf056cbf1cb73b76edf8ea105c37239d || :
@@ -194,6 +194,7 @@ ln -s ../thermald.service %{buildroot}/usr/lib/systemd/system/multi-user.target.
 %defattr(-,root,root,-)
 /usr/share/dbus-1/system-services/org.freedesktop.thermald.service
 /usr/share/dbus-1/system.d/org.freedesktop.thermald.conf
+/usr/share/defaults/thermald/thermal-cpu-cdev-order.xml
 /usr/share/thermald/thermal-conf.KBL_NUC.xml
 
 %files license
