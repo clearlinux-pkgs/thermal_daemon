@@ -42,6 +42,8 @@ BuildRequires : pkgconfig(upower-glib)
 %define debug_package %{nil}
 Patch1: 0001-Add-add-udev-rule-to-start-thermald-just-when-the-ba.patch
 Patch2: 0002-Add-thermal-conf-example-for-KBL-NUC.patch
+Patch3: 0003-src-thd_dbus_interface-Fix-unable-to-terminate-throu.patch
+Patch4: 0004-src-thd_dbus_interface-make-dbus-glib-section-to-be-.patch
 
 %description
 Thermal Daemon monitors and controls platform temperature.
@@ -112,6 +114,8 @@ services components for the thermal_daemon package.
 cd %{_builddir}/thermal_daemon-2.5.6
 %patch -P 1 -p1
 %patch -P 2 -p1
+%patch -P 3 -p1
+%patch -P 4 -p1
 pushd ..
 cp -a thermal_daemon-2.5.6 buildavx2
 popd
